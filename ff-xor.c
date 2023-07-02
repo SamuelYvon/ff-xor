@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <getopt.h>
 
 #define DEFAULT_RESULT_BUFF_SZ 32
@@ -158,7 +159,7 @@ search_string_set *generate_xor_search_strings(char *search_string, size_t bytes
  * @param after
  */
 void search_result_print(FILE *fd, search_result *results, size_t no_results, size_t after) {
-    printf("Found %lld result(s).\n", no_results);
+    printf("Found %lld result(s).\n", (long long) no_results);
     for (size_t i = 0; i < no_results; ++i) {
         long offset = (long) results[i].offset;
         uint8_t key = results[i].byte_key;
@@ -166,7 +167,7 @@ void search_result_print(FILE *fd, search_result *results, size_t no_results, si
         fseek(fd, offset, SEEK_SET);
 
         printf("=============================\n");
-        printf("Result %lld:\nAddr: %ld\nXOR: %d\n", i + 1, offset, key);
+        printf("Result %lld:\nAddr: %ld\nXOR: %d\n", (long long) i + 1, offset, key);
         printf("Search: ");
 
         for (size_t j = 0; j < after; ++j) {
